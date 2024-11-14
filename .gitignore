@@ -1,0 +1,40 @@
+.vs/*
+.vs/
+.bin/
+.obj/
+*.csproj
+*.sln
+*.exe
+*.pdb
+*.cache
+*.suo
+
+
+# Unity generated
+Library/
+Logs/
+obj/
+Temp/
+UserSettings/
+
+# MonoDevelop/Sublime/VSCode generated
+*.svd
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.sublime-*
+*.pidb
+*.userprefs
+.vs/
+.vscode/
+.vsconfig
+
+# OS generated
+.DS_Store
+
+# User generated
+*.unity3d*
+*/Assets/StreamingAssets/
+Assets/_/*.txt
+Assets/_/*.txt.meta
