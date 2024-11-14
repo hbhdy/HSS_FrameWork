@@ -14,6 +14,7 @@ namespace HSS
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             Application.targetFrameRate = 60;
             Time.timeScale = 1f;
+
             //Screen.sleepTimeout = SleepTimeout.NeverSleep;  // 절전모드 해제
         }
     }
