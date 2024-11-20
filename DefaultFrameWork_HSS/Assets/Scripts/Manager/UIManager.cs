@@ -1,6 +1,8 @@
 using HSS;
 using System;
 using System.Collections.Generic;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine;
 
 public enum UIType
@@ -51,46 +53,47 @@ namespace HSS
 
         public void OpenUI(UIType uiType, Canvas_SortOrder sortOrder = Canvas_SortOrder.POPUP, Action openAfter = null, Action closeAtger = null)
         {
-            UIBase openUI = null;
+            Action loadComplete = () =>
+            {
+                UIBase openUI = dicUI[uiType];
+                openUI.callOpenAfter = openAfter;
+                openUI.callCloseAfter = closeAtger;
+                _OpenUI(openUI);
+            };
 
-            if (dicUI.ContainsKey(uiType) == true)
-                openUI = dicUI[uiType];
+            if (dicUI.ContainsKey(uiType) == false)
+            {
+                LoadUI<UIBase>(uiType, sortOrder, loadComplete);
+            }
             else
-                openUI = LoadUI<UIBase>(uiType, sortOrder);
-
-            if (openUI == null)
-                return;
-
-            openUI.callOpenAfter = openAfter;
-            openUI.callCloseAfter = closeAtger;
-            _OpenUI(openUI);
+            {
+                if (dicUI[uiType] != null)
+                    loadComplete?.Invoke();
+            }
         }
 
-        private T LoadUI<T>(UIType uiType, Canvas_SortOrder sortOrder = Canvas_SortOrder.POPUP) where T : MonoBehaviour
+        private void LoadUI<T>(UIType uiType, Canvas_SortOrder sortOrder = Canvas_SortOrder.POPUP, Action loadAfter = null) where T : MonoBehaviour
         {
             GameObject objParent = sortOrder == Canvas_SortOrder.POPUP ? trPopup.gameObject : trScreen.gameObject;
 
-            return LoadUI<T>(UIAttrUtil.GetUIAttributeResourceName(uiType), objParent);
+            LoadUI<T>(UIAttrUtil.GetUIAttributeResourceName(uiType), objParent, loadAfter);
         }
 
-        private T LoadUI<T>(string uiName, GameObject parent) where T : MonoBehaviour
+        private void LoadUI<T>(string uiName, GameObject parent, Action loadAfter = null) where T : MonoBehaviour
         {
-            // TODO: 이후에 전체폴더 탐색으로 처리해야함 
-            string path = string.Format("Prefabs/UI/{0}", uiName);
+            Addressables.InstantiateAsync(uiName).Completed += obj =>
+            {
+                var initUI = obj.Result;
+                initUI.transform.SetParent(parent.transform, false);
 
-            GameObject obj = Resources.Load<GameObject>(path);
-            GameObject popup = GameObject.Instantiate(obj);
-            popup.transform.parent = parent.transform;
+                T findComponent = initUI.GetComponent<T>();
+                UIBase uiBase = findComponent as UIBase;
 
-            UtilFunction.SetRectTransform(popup, obj);
+                if (uiBase != null)
+                    dicUI.Add(uiBase.UIType, uiBase);
 
-            T findComponent = obj.GetComponent<T>();
-            UIBase uiBase = findComponent as UIBase;
-
-            if (uiBase != null)
-                dicUI.Add(uiBase.UIType, uiBase);
-
-            return findComponent;
+                loadAfter?.Invoke();
+            };
         }
 
         private void _OpenUI(UIBase openUI)

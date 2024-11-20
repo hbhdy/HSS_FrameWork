@@ -7,24 +7,24 @@ namespace HSS
         public static void SetRectTransform(GameObject newObj, GameObject originPrefab)
         {
             RectTransform newRect = newObj.GetComponent<RectTransform>();
-            RectTransform oringRect = originPrefab.GetComponent<RectTransform>();
+            RectTransform originRect = originPrefab.GetComponent<RectTransform>();
 
-            if (newRect == null || oringRect == null)
+            if (newRect == null || originRect == null)
                 return;
 
-            newRect.anchoredPosition = oringRect.anchoredPosition;
-            newRect.anchoredPosition3D = oringRect.anchoredPosition3D;
+            newRect.anchoredPosition = originRect.anchoredPosition;
+            newRect.anchoredPosition3D = originRect.anchoredPosition3D;
 
-            newRect.anchorMax = oringRect.anchorMax;
-            newRect.anchorMin = oringRect.anchorMin;
-            newRect.offsetMax = oringRect.offsetMax;
-            newRect.offsetMin = oringRect.offsetMin;
+            newRect.anchorMax = originRect.anchorMax;
+            newRect.anchorMin = originRect.anchorMin;
+            newRect.offsetMax = originRect.offsetMax;
+            newRect.offsetMin = originRect.offsetMin;
 
-            newRect.pivot = oringRect.pivot;
+            newRect.pivot = originRect.pivot;
 
-            newRect.sizeDelta = oringRect.sizeDelta;
+            newRect.sizeDelta = originRect.sizeDelta;
 
-            newRect.localScale = oringRect.localScale;
+            newRect.localScale = originRect.localScale;
         }
     }
 }
