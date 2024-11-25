@@ -36,11 +36,6 @@ namespace HSS
         }
     }
 
-    //public interface IUIType
-    //{
-    //    public UIType UIType { get; }
-    //}
-
     public abstract class UIBase : MonoBehaviour
     {
         // ----- Param -----

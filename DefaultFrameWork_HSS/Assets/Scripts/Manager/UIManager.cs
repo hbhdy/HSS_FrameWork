@@ -62,9 +62,7 @@ namespace HSS
             };
 
             if (dicUI.ContainsKey(uiType) == false)
-            {
                 LoadUI<UIBase>(uiType, sortOrder, loadComplete);
-            }
             else
             {
                 if (dicUI[uiType] != null)
@@ -75,7 +73,6 @@ namespace HSS
         private void LoadUI<T>(UIType uiType, Canvas_SortOrder sortOrder = Canvas_SortOrder.POPUP, Action loadAfter = null) where T : MonoBehaviour
         {
             GameObject objParent = sortOrder == Canvas_SortOrder.POPUP ? trPopup.gameObject : trScreen.gameObject;
-
             LoadUI<T>(UIAttrUtil.GetUIAttributeResourceName(uiType), objParent, loadAfter);
         }
 
