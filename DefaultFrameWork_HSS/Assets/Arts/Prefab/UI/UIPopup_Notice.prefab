@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Common
+  m_text: Notice
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -222,10 +222,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5523037102849357470}
   - component: {fileID: 2832450673034921592}
-  - component: {fileID: 7180830640455776012}
-  - component: {fileID: 4722616036932460914}
+  - component: {fileID: 3750601372777653569}
+  - component: {fileID: 5126658153903289636}
   m_Layer: 5
-  m_Name: UIPopup_Common
+  m_Name: UIPopup_Notice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -259,7 +259,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7916132646771622699}
   m_CullTransparentMesh: 1
---- !u!223 &7180830640455776012
+--- !u!223 &3750601372777653569
 Canvas:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,7 +282,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &4722616036932460914
+--- !u!114 &5126658153903289636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,6 +291,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7916132646771622699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5148f531d3bd440498cc5202dcbaf9b8, type: 3}
+  m_Script: {fileID: 11500000, guid: b15e2f5516afd404ca2e74aae5f2927b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

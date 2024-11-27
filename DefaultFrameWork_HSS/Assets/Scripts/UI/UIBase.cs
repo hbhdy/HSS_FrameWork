@@ -41,7 +41,9 @@ namespace HSS
         // ----- Param -----
 
         public abstract UIType UIType { get; }
-      
+
+        private Canvas baseCanvas;
+
         public Action callOpenAfter;
         public Action callOpenBefore;
         public Action callCloseAfter;
@@ -56,6 +58,7 @@ namespace HSS
 
         protected virtual void OnAwake()
         {
+            baseCanvas = GetComponent<Canvas>();
         }
 
         protected virtual void OpenUI()
@@ -68,6 +71,7 @@ namespace HSS
         protected virtual void CloseUI()
         {
             this.gameObject.SetActive(false);
+            baseCanvas.sortingOrder = 0;
 
             CallCloseAfter();
         }
@@ -82,6 +86,13 @@ namespace HSS
         {
             callCloseAfter?.Invoke();
             callCloseAfter = null;
+        }
+
+        // ----- Get -----
+
+        public Canvas GetCanvas()
+        {
+            return baseCanvas;
         }
     }
 }

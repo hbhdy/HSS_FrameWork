@@ -1,11 +1,11 @@
 using HSS;
 using UnityEngine;
 
-public class UIPopup_Common : UIBase
+public class UIPopup_Option : UIBase
 {
     // ----- Param -----
 
-    public override UIType UIType { get { return UIType.UIPopup_Common; } }
+    public override UIType UIType { get { return UIType.UIPopup_Option; } }
 
     // ----- Init -----
 
