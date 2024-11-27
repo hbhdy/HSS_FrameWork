@@ -16,6 +16,7 @@ Logs/
 obj/
 Temp/
 UserSettings/
+TextMesh Pro/
 
 # MonoDevelop/Sublime/VSCode generated
 *.svd
