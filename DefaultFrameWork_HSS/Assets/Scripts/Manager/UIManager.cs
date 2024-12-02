@@ -19,8 +19,8 @@ public enum UIType
 
 public enum Canvas_SortOrder
 {
-    SCREEN = 100,
-    POPUP = 3000,
+    [EnumName("È­¸é")] SCREEN = 100,
+    [EnumName("ÆË¾÷")] POPUP = 3000,
 }
 
 namespace HSS
@@ -39,7 +39,6 @@ namespace HSS
 
         public void Init()
         {
-
         }
 
         // ----- Set ----- 
