@@ -6,3 +6,14 @@
 # 개인적으로 기본 프레임워크를 만들어보려고 함
 
 타프로젝트에서 필요한 부분이 있다면 떼어서 이식할 수 있게 하는 것이 목표 ( 개발 시간을 줄이는 것이 핵심 )
+
+
+
+
+
+현재 기본 구조
+
+### GameCore
+- UIManager 
+- TimeManager
+- AssetBundleManager
