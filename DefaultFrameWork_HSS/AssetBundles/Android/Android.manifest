@@ -1,0 +1,12 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.26f1
+CRC: 176948622
+HashAppended: 0
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: projectile
+      Dependencies: {}
+    Info_1:
+      Name: wall
+      Dependencies: {}

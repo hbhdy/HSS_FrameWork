@@ -36,7 +36,7 @@ namespace HSS
             yield return null;
 
             UIManager.Init();
-            yield return TimeManager.GetGoogleTime(null);
+            yield return TimeManager.Co_GetGoogleTime(null);
 
             yield return null;
 

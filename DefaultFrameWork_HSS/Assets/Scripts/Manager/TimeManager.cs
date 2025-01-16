@@ -16,7 +16,7 @@ namespace HSS
 
         // ----- Init -----
 
-        public IEnumerator GetGoogleTime(Action action)
+        public IEnumerator Co_GetGoogleTime(Action action)
         {
             UnityWebRequest request = UnityWebRequest.Get("https://google.com");
 
