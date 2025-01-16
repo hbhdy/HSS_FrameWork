@@ -72,6 +72,11 @@ namespace HSS
 
         // ----- Main ----- 
 
+        public void DelayUpdate_OneSeconds()
+        {
+
+        }
+
         public void OpenUI(UIType uiType, Canvas_SortOrder sortOrder = Canvas_SortOrder.POPUP, Action openAfter = null, Action closeAfter = null)
         {
             Action loadComplete = () =>
