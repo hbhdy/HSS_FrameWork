@@ -47,6 +47,7 @@ namespace HSS
             yield return null;
 
             UIManager.Init();
+            SoundManager.Init();
             yield return TimeManager.Co_GetGoogleTime(null);
 
             UIManager.SetTrScreen(trUIScreen);
