@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace HSS
 {
-    public class TimeManager
+    public class TimeManager : SeceondCheck
     {
         // ----- Param -----
 
@@ -35,13 +35,6 @@ namespace HSS
             action?.Invoke();
         }
 
-        // ----- Main ----- 
-
-        public void DelayUpdate_OneSeconds()
-        {
-
-        }
-
         // ----- Set ----- 
 
 
@@ -50,6 +43,13 @@ namespace HSS
         public DateTime GetCurTime()
         {
             return nowUTC.AddSeconds(Time.realtimeSinceStartup);
+        }
+
+        // ----- Main ----- 
+
+        public void DelayUpdate_OneSeconds()
+        {
+
         }
 
         // 아래의 방식을 사용했었는데 이곳 저곳에서 시간 코루틴을 사용하면 한번에 관리가 어려웠음

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using UnityEngine;
 
 namespace HSS 
 {
+    public interface SeceondCheck
+    {
+        public void DelayUpdate_OneSeconds();
+    }
+
+
     public class GameCore : SingletonMono<GameCore>
     {
         // ----- Param -----
@@ -18,6 +25,8 @@ namespace HSS
         public UIManager UIManager { get; private set; } = new UIManager();
 
         public TimeManager TimeManager { get; private set; } = new TimeManager();
+
+        public SoundManager SoundManager { get; private set; } = new SoundManager();
 
         public GameObject objEmptyPrefab;
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace HSS
@@ -24,6 +24,17 @@ namespace HSS
         public EnumName(string value) => _value = value;
 
         public string Value => _value;
+    }
 
+    public enum Language
+    {
+        [EnumName("English")] en = 0,
+        [EnumName("한국어")] ko = 1,
+        [EnumName("日本語")] ja = 2,
+        [EnumName("Español")] es = 3,    // - 스페인어 (es)
+        [EnumName("Português")] pt = 4,  // - 포르투갈어 (pt)
+        [EnumName("Français")] fr = 5,   // - 프랑스어 (fr)
+        [EnumName("Deutsch")] de = 6,    // - 독일어 (de)
+        [EnumName("Русский")] ru = 7,    // - 러시아어 (ru)
     }
 }
