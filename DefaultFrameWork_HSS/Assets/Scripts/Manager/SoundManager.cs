@@ -61,10 +61,10 @@ namespace HSS
         private bool muteSfx;
         private bool muteBgm;
 
-        private const string SOUND_SFX_VOLUME_KEY = "sound_sfx_volume";
-        private const string SOUND_SFX_MUTE_KEY = "sound_sfx_mute";
-        private const string SOUND_BGM_VOLUME_KEY = "sound_bgm_volume";
-        private const string SOUND_BGM_MUTE_KEY = "sound_bgm_mute";
+        private readonly string SOUND_SFX_VOLUME_KEY = "sound_sfx_volume";
+        private readonly string SOUND_SFX_MUTE_KEY = "sound_sfx_mute";
+        private readonly string SOUND_BGM_VOLUME_KEY = "sound_bgm_volume";
+        private readonly string SOUND_BGM_MUTE_KEY = "sound_bgm_mute";
 
         // ----- Init -----
 
