@@ -30,7 +30,7 @@ namespace HSS
                                        DateTimeStyles.AssumeUniversal).ToLocalTime();
             }
             else
-                Debug.LogWarning($"Request Error : {request.error}");
+                HSSLog.LogWarning($"Request Error : {request.error}");
 
             action?.Invoke();
         }

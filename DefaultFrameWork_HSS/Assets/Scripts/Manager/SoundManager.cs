@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
 
 namespace HSS
 {
@@ -39,18 +37,20 @@ namespace HSS
             set { muteBgm = value; }
         }
 
-        public float sameSoundIgnoreTime = 0.1f;    // 마지막 재생한 사운드와 같은게 특정시간 내에오면 무시
-        public int maxAudioSources = 10;        // AudioSource 최대 개수
+        [SerializeField]
+        private float sameSoundIgnoreTime = 0.1f;    // 마지막 재생한 사운드와 같은게 특정시간 내에오면 무시
+        [SerializeField]
+        private int maxAudioSources = 10;        // AudioSource 최대 개수
 
         [Header("Audio Sources")]
         public AudioSource bgmSource;
- 
-        [Header("Audio Clips")]
-        public List<AudioClip> bgmClips = new();
-        public List<AudioClip> sfxClips = new();
 
-        private Dictionary<string, AudioClip> dicSoundData = new();
-        private List<AudioSource> sfxSources = new();
+        [Header("Audio Clips")]
+        public List<AudioClip> bgmClips;
+        public List<AudioClip> sfxClips;
+
+        private Dictionary<string, AudioClip> dicSoundData;
+        private List<AudioSource> sfxSources;
 
         private float lastPlaySoundTime;
         private string lastPlaySoundName;
@@ -61,15 +61,16 @@ namespace HSS
         private bool muteSfx;
         private bool muteBgm;
 
-        private readonly string SOUND_SFX_VOLUME_KEY = "sound_sfx_volume";
-        private readonly string SOUND_SFX_MUTE_KEY = "sound_sfx_mute";
-        private readonly string SOUND_BGM_VOLUME_KEY = "sound_bgm_volume";
-        private readonly string SOUND_BGM_MUTE_KEY = "sound_bgm_mute";
+        private const string SOUND_SFX_VOLUME_KEY = "sound_sfx_volume";
+        private const string SOUND_SFX_MUTE_KEY = "sound_sfx_mute";
+        private const string SOUND_BGM_VOLUME_KEY = "sound_bgm_volume";
+        private const string SOUND_BGM_MUTE_KEY = "sound_bgm_mute";
 
         // ----- Init -----
 
         public void Init()
         {
+            dicSoundData = new Dictionary<string, AudioClip>();
             foreach (var clip in bgmClips)
                 dicSoundData[clip.name] = clip;
 
@@ -78,6 +79,7 @@ namespace HSS
 
             if (sfxSources.Count < maxAudioSources)
             {
+                sfxSources = new List<AudioSource>();
                 for (int i = 0; i < maxAudioSources; i++)
                 {
                     var source = gameObject.AddComponent<AudioSource>();

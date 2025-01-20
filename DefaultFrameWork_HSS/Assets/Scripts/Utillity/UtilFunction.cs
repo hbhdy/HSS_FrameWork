@@ -69,7 +69,7 @@ namespace HSS
             Transform t = tr.Find(path);
             if (t == null)
             {
-                Debug.LogWarning($"Child Not Found : path ={GetFullPath(tr, path)}");
+                HSSLog.LogWarning($"Child Not Found : path ={GetFullPath(tr, path)}");
                 return null;
             }
 
@@ -87,7 +87,7 @@ namespace HSS
             T component = tr.GetComponent<T>();
             if (component == null)
             {
-                Debug.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, "")}");
+                HSSLog.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, "")}");
             }
 
             return component;
@@ -102,7 +102,7 @@ namespace HSS
             T component = t.GetComponent<T>();
             if (component == null)
             {
-                Debug.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, path)}");
+                HSSLog.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, path)}");
             }
 
             return component;
