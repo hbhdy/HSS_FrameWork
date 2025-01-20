@@ -7,7 +7,10 @@
 
 구조
 
-### GameCore
-- UIManager 
-- TimeManager
-- SoundManager
+### [GameCore](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/GameCore.cs)
+- [UIManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/UIManager.cs)
+- [TimeManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/TimeManager.cs)
+- [SoundManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/SoundManager.cs)
+
+
+
