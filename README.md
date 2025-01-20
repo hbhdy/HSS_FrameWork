@@ -18,3 +18,4 @@
 
 [InfiniteScrollView](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Utillity/InfiniteScrollView.cs) - 재사용 스크롤 뷰 
 
+[AlphabetUnitChange](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Utillity/AlphabetUnitChange.cs) - double형 데이터를 알파벳 단위로 표현 <-> 알파벳 단위 텍스트를 double형으로 변환 ex) 1A, 246BC 
