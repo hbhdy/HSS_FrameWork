@@ -5,12 +5,16 @@
 
 # 필요한 부분을 떼서 사용할 수 있도록 모듈화가 목적!
 
-구조
+# Frame
 
 ### [GameCore](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/GameCore.cs)
-- [UIManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/UIManager.cs)
-- [TimeManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/TimeManager.cs)
-- [SoundManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/SoundManager.cs)
+- [UIManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/UIManager.cs) -  팝업의 온오프를 호출할 수 있는 기본 구조
+- [TimeManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/TimeManager.cs) - 구글 시간 기반
+- [SoundManager](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Manager/SoundManager.cs) - BGM & SFX의 재생을 관리함
 
 
+# Util
+[ObjectPool](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Utillity/ObjectPool.cs) - 오브젝트 풀
+
+[InfiniteScrollView](https://github.com/hbhdy/HSS_FrameWork/blob/master/DefaultFrameWork_HSS/Assets/Scripts/Utillity/InfiniteScrollView.cs) - 재사용 스크롤 뷰 
 
