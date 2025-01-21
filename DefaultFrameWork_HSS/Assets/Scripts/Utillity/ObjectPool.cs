@@ -76,62 +76,7 @@ namespace HSS
 
         // ----- Spawn -----
 
-        public static T Spawn<T>(T prefab, Transform parent, Vector3 position, Quaternion rotation) where T : Component
-        {
-            return Spawn(prefab.gameObject, parent, position, rotation).GetComponent<T>();
-        }
-
-        public static T Spawn<T>(T prefab, Vector3 position, Quaternion rotation) where T : Component
-        {
-            return Spawn(prefab.gameObject, null, position, rotation).GetComponent<T>();
-        }
-
-        public static T Spawn<T>(T prefab, Transform parent, Vector3 position) where T : Component
-        {
-            return Spawn(prefab.gameObject, parent, position, Quaternion.identity).GetComponent<T>();
-        }
-
-        public static T Spawn<T>(T prefab, Vector3 position) where T : Component
-        {
-            return Spawn(prefab.gameObject, null, position, Quaternion.identity).GetComponent<T>();
-        }
-
-        public static T Spawn<T>(T prefab, Transform parent) where T : Component
-        {
-            return Spawn(prefab.gameObject, parent, Vector3.zero, Quaternion.identity).GetComponent<T>();
-        }
-
-        public static T Spawn<T>(T prefab) where T : Component
-        {
-            return Spawn(prefab.gameObject, null, Vector3.zero, Quaternion.identity).GetComponent<T>();
-        }
-
-        public static GameObject Spawn(GameObject prefab, Transform parent, Vector3 position)
-        {
-            return Spawn(prefab, parent, position, Quaternion.identity);
-        }
-
-        public static GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation)
-        {
-            return Spawn(prefab, null, position, rotation);
-        }
-
-        public static GameObject Spawn(GameObject prefab, Transform parent)
-        {
-            return Spawn(prefab, parent, Vector3.zero, Quaternion.identity);
-        }
-
-        public static GameObject Spawn(GameObject prefab, Vector3 position)
-        {
-            return Spawn(prefab, null, position, Quaternion.identity);
-        }
-
-        public static GameObject Spawn(GameObject prefab)
-        {
-            return Spawn(prefab, null, Vector3.zero, Quaternion.identity);
-        }
-
-        public static GameObject Spawn(GameObject prefab, Transform parent, Vector3 position, Quaternion rotation)
+        public static GameObject Spawn(GameObject prefab, Transform parent, Vector3 position, Quaternion rotation, Vector3 scale)
         {
             if (prefab == null)
                 return null;
@@ -157,6 +102,7 @@ namespace HSS
                         trans.SetParent(parent);
                         trans.localPosition = position;
                         trans.localRotation = rotation;
+                        trans.localScale = scale;
                         obj.SetActive(true);
                         Instance.spawnedObjects.Add(obj, prefab);
 
@@ -169,6 +115,7 @@ namespace HSS
                 trans.SetParent(parent);
                 trans.localPosition = position;
                 trans.localRotation = rotation;
+                trans.localScale = scale;
                 Instance.spawnedObjects.Add(obj, prefab);
 
                 return obj;
@@ -180,10 +127,99 @@ namespace HSS
                 trans.SetParent(parent);
                 trans.localPosition = position;
                 trans.localRotation = rotation;
+                trans.localScale = scale;
 
                 return obj;
             }
         }
+
+        // --
+
+        public static T Spawn<T>(T prefab, Transform parent, Vector3 position, Quaternion rotation, Vector3 scale) where T : Component
+        {
+            return Spawn(prefab.gameObject, parent, position, rotation, scale).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab, Transform parent, Vector3 position, Quaternion rotation) where T : Component
+        {
+            return Spawn(prefab.gameObject, parent, position, rotation).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab, Transform parent, Vector3 position, Vector3 scale) where T : Component
+        {
+            return Spawn(prefab.gameObject, parent, position, scale).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab, Transform parent, Vector3 position) where T : Component
+        {
+            return Spawn(prefab.gameObject, parent, position).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab, Transform parent) where T : Component
+        {
+            return Spawn(prefab.gameObject, parent).GetComponent<T>();
+        }
+
+        // --
+
+        public static T Spawn<T>(T prefab, Vector3 position, Quaternion rotation, Vector3 scale) where T : Component
+        {
+            return Spawn(prefab.gameObject, null, position, rotation, scale).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab, Vector3 position, Quaternion rotation) where T : Component
+        {
+            return Spawn(prefab.gameObject, null, position, rotation).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab, Vector3 position, Vector3 scale) where T : Component
+        {
+            return Spawn(prefab.gameObject, null, position, scale).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab, Vector3 position) where T : Component
+        {
+            return Spawn(prefab.gameObject, null, position).GetComponent<T>();
+        }
+        public static T Spawn<T>(T prefab) where T : Component
+        {
+            return Spawn(prefab.gameObject, null).GetComponent<T>();
+        }
+
+        // --
+
+        public static GameObject Spawn(GameObject prefab, Transform parent, Vector3 position, Quaternion rotation)
+        {
+            return Spawn(prefab, parent, position, rotation, Vector3.one);
+        }
+        public static GameObject Spawn(GameObject prefab, Transform parent, Vector3 position, Vector3 scale)
+        {
+            return Spawn(prefab, parent, position, Quaternion.identity, scale);
+        }
+        public static GameObject Spawn(GameObject prefab, Transform parent, Vector3 position)
+        {
+            return Spawn(prefab, parent, position, Quaternion.identity, Vector3.one);
+        }
+        public static GameObject Spawn(GameObject prefab, Transform parent)
+        {
+            return Spawn(prefab, parent, Vector3.zero, Quaternion.identity, Vector3.one);
+        }
+
+        // --
+
+        public static GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            return Spawn(prefab, null, position, rotation, scale);
+        }
+        public static GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation)
+        {
+            return Spawn(prefab, null, position, rotation);
+        }
+        public static GameObject Spawn(GameObject prefab, Vector3 position, Vector3 scale)
+        {
+            return Spawn(prefab, null, position, scale);
+        }
+        public static GameObject Spawn(GameObject prefab, Vector3 position)
+        {
+            return Spawn(prefab, null, position);
+        }
+        public static GameObject Spawn(GameObject prefab)
+        {
+            return Spawn(prefab, null);
+        }    
 
         // ----- Recycle -----
 
@@ -326,64 +362,71 @@ namespace HSS
     {
         // ----- Spawn Extensions -----
 
-        public static T Spawn<T>(this T prefab, Transform parent, Vector3 position, Quaternion rotation) where T : Component
+        public static T Spawn<T>(this T prefab, Vector3 position, Quaternion rotation, Vector3 scale) where T : Component
         {
-            return ObjectPool.Spawn(prefab, parent, position, rotation);
+            return ObjectPool.Spawn(prefab, position, rotation, scale);
         }
-
         public static T Spawn<T>(this T prefab, Vector3 position, Quaternion rotation) where T : Component
         {
-            return ObjectPool.Spawn(prefab, null, position, rotation);
+            return ObjectPool.Spawn(prefab, position, rotation);
         }
-
-        public static T Spawn<T>(this T prefab, Transform parent, Vector3 position) where T : Component
+        public static T Spawn<T>(this T prefab, Vector3 position, Vector3 scale) where T : Component
         {
-            return ObjectPool.Spawn(prefab, parent, position, Quaternion.identity);
+            return ObjectPool.Spawn(prefab, position, scale);
         }
-
         public static T Spawn<T>(this T prefab, Vector3 position) where T : Component
         {
-            return ObjectPool.Spawn(prefab, null, position, Quaternion.identity);
+            return ObjectPool.Spawn(prefab, position);
         }
-
-        public static T Spawn<T>(this T prefab, Transform parent) where T : Component
-        {
-            return ObjectPool.Spawn(prefab, parent, Vector3.zero, Quaternion.identity);
-        }
-
         public static T Spawn<T>(this T prefab) where T : Component
         {
-            return ObjectPool.Spawn(prefab, null, Vector3.zero, Quaternion.identity);
+            return ObjectPool.Spawn(prefab);
         }
 
+        // --
+
+        public static GameObject Spawn(this GameObject prefab, Transform parent, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            return ObjectPool.Spawn(prefab, parent, position, rotation, scale);
+        }
         public static GameObject Spawn(this GameObject prefab, Transform parent, Vector3 position, Quaternion rotation)
         {
             return ObjectPool.Spawn(prefab, parent, position, rotation);
         }
-
-        public static GameObject Spawn(this GameObject prefab, Vector3 position, Quaternion rotation)
+        public static GameObject Spawn(this GameObject prefab, Transform parent, Vector3 position, Vector3 scale)
         {
-            return ObjectPool.Spawn(prefab, null, position, rotation);
+            return ObjectPool.Spawn(prefab, parent, position, scale);
         }
-
         public static GameObject Spawn(this GameObject prefab, Transform parent, Vector3 position)
         {
-            return ObjectPool.Spawn(prefab, parent, position, Quaternion.identity);
+            return ObjectPool.Spawn(prefab, parent, position);
         }
-
-        public static GameObject Spawn(this GameObject prefab, Vector3 position)
-        {
-            return ObjectPool.Spawn(prefab, null, position, Quaternion.identity);
-        }
-
         public static GameObject Spawn(this GameObject prefab, Transform parent)
         {
-            return ObjectPool.Spawn(prefab, parent, Vector3.zero, Quaternion.identity);
+            return ObjectPool.Spawn(prefab, parent);
         }
 
+        // --
+
+        public static GameObject Spawn(this GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            return ObjectPool.Spawn(prefab, position, rotation, scale);
+        }
+        public static GameObject Spawn(this GameObject prefab, Vector3 position, Quaternion rotation)
+        {
+            return ObjectPool.Spawn(prefab, position, rotation);
+        }
+        public static GameObject Spawn(this GameObject prefab, Vector3 position, Vector3 scale)
+        {
+            return ObjectPool.Spawn(prefab, position, scale);
+        }
+        public static GameObject Spawn(this GameObject prefab, Vector3 position)
+        {
+            return ObjectPool.Spawn(prefab, position);
+        }
         public static GameObject Spawn(this GameObject prefab)
         {
-            return ObjectPool.Spawn(prefab, null, Vector3.zero, Quaternion.identity);
+            return ObjectPool.Spawn(prefab);
         }
 
         // ----- Recycle Extensions -----
