@@ -1,8 +1,12 @@
-﻿using System;
+﻿using HSS;
+using System;
+using System.Diagnostics;
 using System.Globalization;
 
 public static class AlphabetUnitChange
 {
+    // ----- Param -----
+
     private const string Zero = "0";
     private const string Infinity = "Infinity";
 
@@ -15,6 +19,8 @@ public static class AlphabetUnitChange
             "BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ",
             "CA","CB","CC","CD","CE","CF","CG","CH","CI","CJ","CK","CL","CM","CN","CO","CP","CQ","CR","CS","CT","CU","CV","CW","CX",
     };
+
+    // ----- Get ----- 
 
     // double형 데이터를 알파벳 단위로 표현
     public static string ToAlphabetString(this double number, bool isDecimalPoint = true)
@@ -31,11 +37,11 @@ public static class AlphabetUnitChange
         // 지수 표현식 사용
         string[] partsSplit = number.ToString("E").Split('+');
 
-        if (partsSplit.Length < 2)
+        if (partsSplit.Length < 2 || !int.TryParse(partsSplit[1], out int exponent))
+        {
+            HSSLog.LogWarning("ToAlphabetString Fail");
             return Zero;
-
-        if (!int.TryParse(partsSplit[1], out int exponent))  // 지수가 존재하는지
-            return Zero;
+        }
 
         int quotient = exponent / 3;
         int remainder = exponent % 3;
