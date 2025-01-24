@@ -59,7 +59,7 @@ namespace HSS
             HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.ToAlphabetString(100000000000000000000000000000d)}");
             HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.ToAlphabetString(340000000000000000000000000000000000d)}");
             HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.ToAlphabetString(820000000000000000000000000000000000000000000000000000000d)}");
-            HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.AlphabetToDouble("286CC")}"); 
+            HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.AlphabetToDouble("286CC").ToString()}"); 
         }
 
         // ----- Main -----
