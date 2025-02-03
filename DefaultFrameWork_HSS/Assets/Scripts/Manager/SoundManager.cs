@@ -99,10 +99,12 @@ namespace HSS
 
         public void SetAllVolume(float bgmVolume, float sfxVolume)
         {
-            bgmSource.volume = bgmVolume;
+            BgmVolume = bgmVolume;
+            SfxVolume = sfxVolume;
 
+            bgmSource.volume = BgmVolume;
             foreach (var source in sfxSources)
-                source.volume = sfxVolume;
+                source.volume = SfxVolume;
         }
 
         // ----- Get ----- 
@@ -121,12 +123,12 @@ namespace HSS
 
         // ----- Main ----- 
 
-        public void PlayBGM(string clipName, float volume = 1f)
+        public void PlayBGM(string clipName)
         {
             if (dicSoundData.TryGetValue(clipName, out AudioClip clip))
             {
                 bgmSource.clip = clip;
-                bgmSource.volume = muteBgm ? 0 : volume;
+                bgmSource.volume = muteBgm ? 0 : bgmVolume;
                 bgmSource.loop = true;
                 bgmSource.Play();
             }
@@ -134,7 +136,7 @@ namespace HSS
                 HSSLog.Log($"BGM is Null : {clipName}");
         }
 
-        public void PlaySFX(string clipName, float volume = 1f)
+        public void PlaySFX(string clipName)
         {
             if (dicSoundData.TryGetValue(clipName, out AudioClip clip))
             {
@@ -150,7 +152,7 @@ namespace HSS
                     lastPlaySoundName = clip.name;
                     lastPlaySoundTime = Time.realtimeSinceStartup;
 
-                    source.volume = muteSfx ? 0 : volume;
+                    source.volume = muteSfx ? 0 : sfxVolume;
                     source.PlayOneShot(clip);
                 }
             }

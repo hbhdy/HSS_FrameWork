@@ -75,8 +75,6 @@ namespace HSS
                 items.Add(scrollRect.content.GetChild(i).GetComponent<RectTransform>());
 
             itemCount = items.Count;
-
-            SetLimitHeight(1400);
         }
 
         /// <summary>
@@ -107,22 +105,14 @@ namespace HSS
 
             if (isVertical)
             {
-                recordOffsetY = items[1].anchoredPosition.y - items[0].anchoredPosition.y;
-                
-                if (recordOffsetY < 0)
-                    recordOffsetY *= -1;
-
-                disableMarginY = recordOffsetY * itemCount / 2;
+                recordOffsetY = Mathf.Abs(items[1].anchoredPosition.y - items[0].anchoredPosition.y);
+                disableMarginY = recordOffsetY * (itemCount / 2);
             }
 
             if (isHorizontal)
             {
-                recordOffsetX = items[1].anchoredPosition.x - items[0].anchoredPosition.x;
-                
-                if (recordOffsetX < 0)
-                    recordOffsetX *= -1;
-
-                disableMarginX = recordOffsetX * itemCount / 2;
+                recordOffsetX = Mathf.Abs(items[1].anchoredPosition.x - items[0].anchoredPosition.x);
+                disableMarginX = recordOffsetX * (itemCount / 2);
             }
 
             if (gridGroup)

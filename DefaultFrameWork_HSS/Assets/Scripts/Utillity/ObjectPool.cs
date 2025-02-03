@@ -65,7 +65,7 @@ namespace HSS
                     {
                         var obj = Object.Instantiate(prefab);
                         obj.transform.SetParent(parent);
-                        obj.name = string.Format("{0}_{1}", prefab.name, obj.GetInstanceID());
+                        obj.name = $"{prefab.name}_{obj.GetInstanceID().ToString()}";
 
                         list.Add(obj);
                     }
