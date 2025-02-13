@@ -54,7 +54,8 @@ namespace HSS
                     //PlayerPrefs.SetString("search_directory_path", savedSearchDirectory);
                 }
 
-                if (GUILayout.Button("Move All DataTable Files & Create CSV file", GUILayout.Height(40))) CopyAllDataFiles();
+                if (GUILayout.Button("Move All DataTable Files & Create CSV file", GUILayout.Height(40))) 
+                    CopyAllDataFiles();
             }
 
             GUILayout.Label(sbProgress.ToString());
@@ -100,6 +101,7 @@ namespace HSS
 
         // ----- Main ----- 
 
+        // 엑셀 데이터 -> CSV 변환
         public void ConvertProcess_DataTable_All()
         {
             sbSuccess.Clear();
@@ -112,7 +114,7 @@ namespace HSS
             string filePath;
             foreach (System.IO.FileInfo file in di.GetFiles())
             {
-                if (file.Extension.ToLower().CompareTo(".xlsx") == 0)
+                if (file.Extension.ToLower().EndsWith(".xls") || file.Extension.ToLower().EndsWith(".xlsx"))
                 {
                     filePath = GetDataPath_Application($"{readPath_All}/{file.Name}");
                     ConvertToCSV(filePath, savePath_DB);
@@ -126,7 +128,7 @@ namespace HSS
                 HSSLog.Log("Folder.Name : " + folder.Name);
                 foreach (System.IO.FileInfo file in folder.GetFiles())
                 {
-                    if (file.Extension.ToLower().CompareTo(".xlsx") == 0)
+                    if (file.Extension.ToLower().EndsWith(".xls") || file.Extension.ToLower().EndsWith(".xlsx"))
                     {
                         filePath = GetDataPath_Application($"{readPath_All}/{folder.Name}/{file.Name}");
                         ConvertToCSV(filePath, savePath_DB);
@@ -196,13 +198,20 @@ namespace HSS
             //DeleteFile($"{filePath}.meta");
             HSSLog.Log($" From => {filePath} \n To => {savePath}");
 
-            using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            try
             {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    ConvertProcess(reader.AsDataSet(), GetDataPath_Application(savePath), GetFileName(filePath, '/', ".xlsx"), startRow);
-                    callback?.Invoke();
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        ConvertProcess(reader.AsDataSet(), GetDataPath_Application(savePath), GetFileName(filePath, '/', ".xlsx"), startRow);
+                        callback?.Invoke();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                sbFail.AppendLine($"{filePath} 변환 실패: {ex.Message}");
             }
         }
 
@@ -220,6 +229,12 @@ namespace HSS
                         //? column
                         string str = result.Tables[0].Rows[x][y].ToString();
 
+                        //// 비어있는 행 건너뛸 수 있음
+                        //string str = result.Tables[0].Rows[x][y]?.ToString().Trim();
+                        //if (string.IsNullOrEmpty(str))
+                        //    continue;
+
+                        // 쉼표 오류 방지 - csv 파일은 쉼표로 구분된 텍스트 파일이기 때문
                         if (str.Contains(','))
                             str = regexComma.Replace(str, "u002c");
 
@@ -261,7 +276,7 @@ namespace HSS
 
                 string fileName = $"{name}.csv";
                 Stream fileStream = new FileStream(filePath + fileName, FileMode.OpenOrCreate, FileAccess.Write);
-                StreamWriter outStream = new StreamWriter(fileStream, Encoding.UTF8);
+                StreamWriter outStream = new StreamWriter(fileStream, new UTF8Encoding(true));
                 outStream.WriteLine(value);
                 outStream.Close();
             }

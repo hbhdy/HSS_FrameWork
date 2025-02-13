@@ -12,9 +12,11 @@ namespace HSS
         public bool isLimitHeight = false;
         public float moveOffset = 50f;
         
+        // 각 아이템간의 거리
         private float recordOffsetX = 0;
         private float recordOffsetY = 0;
 
+        // 아이템을 이동시키는 한계 값
         private float disableMarginX = 0;
         private float disableMarginY = 0;
 

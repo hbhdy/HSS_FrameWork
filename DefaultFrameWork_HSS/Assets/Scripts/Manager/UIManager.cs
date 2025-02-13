@@ -1,4 +1,4 @@
-using HSS;
+﻿using HSS;
 using System;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
@@ -18,8 +18,8 @@ public enum UIType
 
 public enum Canvas_SortOrder
 {
-    [EnumName("ȭ��")] SCREEN = 100,
-    [EnumName("�˾�")] POPUP = 3000,
+    [EnumName("화면")] SCREEN = 100,
+    [EnumName("팝업")] POPUP = 3000,
 }
 
 namespace HSS
@@ -117,6 +117,7 @@ namespace HSS
 
         private void LoadUI<T>(string uiName, GameObject parent, Action loadAfter = null) where T : MonoBehaviour
         {
+            // 어드레서블 사용하지 않을 경우, 리소스 불러오는 구조 필요
             Addressables.InstantiateAsync(uiName).Completed += obj =>
             {
                 var initUI = obj.Result;
