@@ -73,7 +73,7 @@ namespace HSS
             // 1초마다 해당 매니저에 있는 타이머로직을 실행
             if (deltaTime >= 1f)
             {
-                //Time.DelayUpdate_OneSeconds();
+                TIME.DelayUpdate_OneSeconds();
                 //UI.DelayUpdate_OneSeconds();
 
                 deltaTime -= 1f;

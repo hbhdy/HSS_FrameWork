@@ -1,8 +1,9 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 using System.Collections;
 using System.Globalization;
 using UnityEngine.Networking;
+using UniRx;
 
 namespace HSS
 {
@@ -12,6 +13,8 @@ namespace HSS
 
         private DateTime baseTime;
         public DateTime nowUTC => baseTime;
+
+        public IReactiveProperty<int> testProperty = new ReactiveProperty<int>(0);
 
         // ----- Init -----
 
@@ -59,13 +62,16 @@ namespace HSS
 
         // ----- Main ----- 
 
-        // ÇØ´ç ¸Þ¼­µå È£Ãâ ¹æ½Äµµ Á» ¾Ö¸ÅÇÑ °Í °°À½... UriRX¸¦ È°¿ëÇØºÁ¾ß°ÚÀ½
+        // 
         public void DelayUpdate_OneSeconds()
         {
+            //testProperty.Value -= 1;
 
+            //if (testProperty.Value <= 0)
+            //    testProperty.Value = 0;
         }
 
-        // ¾Æ·¡ÀÇ ¹æ½ÄÀ» »ç¿ëÇß¾ú´Âµ¥ ÀÌ°÷ Àú°÷¿¡¼­ ½Ã°£ ÄÚ·çÆ¾À» »ç¿ëÇÏ¸é ÇÑ¹ø¿¡ °ü¸®°¡ ¾î·Á¿üÀ½
+        // ì•„ëž˜ì˜ ë°©ì‹ì„ ì‚¬ìš©í–ˆì—ˆëŠ”ë° ì´ê³³ ì €ê³³ì—ì„œ ì‹œê°„ ì½”ë£¨í‹´ì„ ì‚¬ìš©í•˜ë©´ í•œë²ˆì— ê´€ë¦¬ê°€ ì–´ë ¤ì› ìŒ
 
         //public static Coroutine RemainVisibleUI(MonoBehaviour mono, Text textObject, DateTime endTime, string format = "", bool isHourDisplay = true, bool isRealTime = true, Action timeOverAction = null)
         //{
@@ -84,7 +90,7 @@ namespace HSS
         //    WaitForSeconds wait = new WaitForSeconds(1f);
 
         //    TimeSpan remainTime;
-        //    DateTime localSavedUtcNow = realUtcNow;  // ½ÇÇà ½ÃÁ¡ÀÇ Time À» ÀúÀåÇØ¼­ »ç¿ëÇÑ´Ù.
+        //    DateTime localSavedUtcNow = realUtcNow;  // ì‹¤í–‰ ì‹œì ì˜ Time ì„ ì €ìž¥í•´ì„œ ì‚¬ìš©í•œë‹¤.
 
         //    while (textObject.gameObject.activeInHierarchy == true)
         //    {
@@ -98,7 +104,7 @@ namespace HSS
         //        }
 
         //        textObject.text = "";
-        //        // ½Ã°£ °»½Å
+        //        // ì‹œê°„ ê°±ì‹ 
            
         //        if (isRealTime)
         //            yield return realWait;
