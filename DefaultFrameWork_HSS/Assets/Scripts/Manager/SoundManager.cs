@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace HSS
 {
-    public class SoundManager : MonoBehaviour
+    public class SoundManager : BaseManager
     {
         // ----- Param -----
 
@@ -68,7 +69,12 @@ namespace HSS
 
         // ----- Init -----
 
-        public void Init()
+        public override IEnumerator Co_Init()
+        {
+            yield return base.Co_Init();
+        }
+
+        public override void Init()
         {
             dicSoundData = new Dictionary<string, AudioClip>();
             foreach (var clip in bgmClips)
@@ -92,7 +98,7 @@ namespace HSS
             SfxVolume = PlayerPrefs.GetFloat(SOUND_SFX_VOLUME_KEY, 1);
             BgmVolume = PlayerPrefs.GetFloat(SOUND_BGM_VOLUME_KEY, 1);
 
-            isinitializing = true;
+            base.Init();
         }
 
         // ----- Set ----- 

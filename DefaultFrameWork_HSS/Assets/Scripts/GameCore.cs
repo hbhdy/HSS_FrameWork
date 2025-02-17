@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace HSS 
 {
@@ -17,22 +18,26 @@ namespace HSS
     {
         // ----- Param -----
 
-        [SerializeField]
-        private Transform trUIScreen;
-        [SerializeField]
-        private Transform trUIPopup;
+        [Header("Base Managers")]
+        public List<BaseManager> managerList;
 
-        public UIManager UIManager { get; private set; } = new UIManager();
-
-        public TimeManager TimeManager { get; private set; } = new TimeManager();
-
-        public SoundManager SoundManager { get; private set; } = new SoundManager();
-
-        public GameObject objEmptyPrefab;
-
+        private Dictionary<Type, BaseManager> dicManagers = new Dictionary<Type, BaseManager>();
         private float deltaTime = 0f;
 
+        public static UIManager UI { get { return Instance.Get<UIManager>(); } }
+        public static TimeManager TIME { get { return Instance.Get<TimeManager>(); } }
+        public static SoundManager SOUND { get { return Instance.Get<SoundManager>(); } }
+
+        [HideInInspector]
+        public static bool isCoreReady = false;
+
         // ----- Init -----
+
+        public T Get<T>() where T : BaseManager
+        {
+            var type = typeof(T);
+            return dicManagers.ContainsKey(type) ? dicManagers[type] as T : null;
+        }
 
         public IEnumerator Start()
         {
@@ -41,24 +46,24 @@ namespace HSS
             Application.targetFrameRate = 60;
             Time.timeScale = 1f;
 
-            // Temp
-            ObjectPool.CreatePool(objEmptyPrefab, 1);
-
             yield return null;
 
-            UIManager.Init();
-            //SoundManager.Init();
-            yield return TimeManager.Co_GetGoogleTime(null);
+            dicManagers.Clear();
+            for (int i = 0; i < managerList.Count; i++)
+            {
+                yield return StartCoroutine(managerList[i].Co_Init());
+                
+                var type = managerList[i].GetType();
+                dicManagers.Add(type, managerList[i]);
+            }
 
-            UIManager.SetTrScreen(trUIScreen);
-            UIManager.SetTrPopup(trUIPopup);
+            yield return new WaitUntil(() => isCoreReady);
 
-            //UIManager.OpenUI(UIType.UIPopup_Common, Canvas_SortOrder.POPUP);
+            for (int i = 0; i < managerList.Count; i++)
+                managerList[i].Init();
 
-            HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.ToAlphabetString(100000000000000000000000000000d)}");
-            HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.ToAlphabetString(340000000000000000000000000000000000d)}");
-            HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.ToAlphabetString(820000000000000000000000000000000000000000000000000000000d)}");
-            HSSLog.Log($"과연 숫자는~ {AlphabetUnitChange.AlphabetToDouble("286CC").ToString()}");
+
+            //UI.OpenUI(UIType.UIPopup_Common, Canvas_SortOrder.POPUP);
         }
 
         // ----- Main -----
@@ -68,8 +73,8 @@ namespace HSS
             // 1초마다 해당 매니저에 있는 타이머로직을 실행
             if (deltaTime >= 1f)
             {
-                TimeManager.DelayUpdate_OneSeconds();
-                UIManager.DelayUpdate_OneSeconds();
+                //Time.DelayUpdate_OneSeconds();
+                //UI.DelayUpdate_OneSeconds();
 
                 deltaTime -= 1f;
             }

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace HSS
 {
-    public class TimeManager : SeceondCheck
+    public class TimeManager : BaseManager, SeceondCheck
     {
         // ----- Param -----
 
@@ -14,6 +14,18 @@ namespace HSS
         public DateTime nowUTC => baseTime;
 
         // ----- Init -----
+
+        public override IEnumerator Co_Init()
+        {
+            yield return StartCoroutine(Co_GetGoogleTime(null));
+
+            yield return base.Co_Init();
+        }
+
+        public override void Init()
+        {
+            base.Init();
+        }
 
         public IEnumerator Co_GetGoogleTime(Action action)
         {
@@ -47,6 +59,7 @@ namespace HSS
 
         // ----- Main ----- 
 
+        // 해당 메서드 호출 방식도 좀 애매한 것 같음... UriRX를 활용해봐야겠음
         public void DelayUpdate_OneSeconds()
         {
 

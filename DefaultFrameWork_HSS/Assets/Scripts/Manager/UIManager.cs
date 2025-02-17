@@ -1,55 +1,55 @@
-﻿using HSS;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
-
-public enum UIType
-{
-    None,
-
-    [UIAttrType("UIPopup_Common")]
-    UIPopup_Common,
-    [UIAttrType("UIPopup_Option")]
-    UIPopup_Option,
-    [UIAttrType("UIPopup_Notice")]
-    UIPopup_Notice,
-}
-
-public enum Canvas_SortOrder
-{
-    [EnumName("화면")] SCREEN = 100,
-    [EnumName("팝업")] POPUP = 3000,
-}
+using System.Collections;
 
 namespace HSS
 {
-    public class UIManager
+    public enum UIType
+    {
+        None,
+
+        [UIAttrType("UIPopup_Common")]
+        UIPopup_Common,
+        [UIAttrType("UIPopup_Option")]
+        UIPopup_Option,
+        [UIAttrType("UIPopup_Notice")]
+        UIPopup_Notice,
+    }
+
+    public enum Canvas_SortOrder
+    {
+        [EnumName("화면")] SCREEN = 100,
+        [EnumName("팝업")] POPUP = 3000,
+    }
+
+    public class UIManager : BaseManager
     {
         // ----- Param -----
+        [Header("Base Transform UI")]
+        public Transform trUIScreen;
+        public Transform trUIPopup;
 
         private Dictionary<UIType, UIBase> dicUI = new Dictionary<UIType, UIBase>();
         private List<UIBase> openUIList = new List<UIBase>();
 
-        public Transform trScreen { get; private set; }
-        public Transform trPopup { get; private set; }
+        private Transform trScreen;
+        private Transform trPopup;
 
         // ----- Init -----
 
-        public void Init()
+        public override IEnumerator Co_Init()
         {
+            yield return base.Co_Init();
+        }
+
+        public override void Init()
+        {
+            base.Init();
         }
 
         // ----- Set ----- 
-
-        public void SetTrScreen(Transform tr)
-        {
-            trScreen = tr;
-        }
-        public void SetTrPopup(Transform tr)
-        {
-            trPopup = tr;
-        }
 
         // ----- Get ----- 
 
