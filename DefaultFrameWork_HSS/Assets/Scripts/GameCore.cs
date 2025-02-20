@@ -2,9 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
 using UnityEngine;
-using UnityEngine.Video;
 
 namespace HSS 
 {
@@ -57,11 +55,12 @@ namespace HSS
                 dicManagers.Add(type, managerList[i]);
             }
 
+
+            isCoreReady = true;
             yield return new WaitUntil(() => isCoreReady);
 
-            for (int i = 0; i < managerList.Count; i++)
-                managerList[i].Init();
-
+            //for (int i = 0; i < managerList.Count; i++)
+            //    managerList[i].Init();
 
             //UI.OpenUI(UIType.UIPopup_Common, Canvas_SortOrder.POPUP);
         }

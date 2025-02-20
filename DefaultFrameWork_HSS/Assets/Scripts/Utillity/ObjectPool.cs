@@ -383,6 +383,21 @@ namespace HSS
             return ObjectPool.Spawn(prefab);
         }
 
+        public static T Spawn<T>(this T prefab, Transform parent, Vector3 position, Quaternion rotation) where T : Component
+        {
+            return ObjectPool.Spawn(prefab, parent, position, rotation);
+        }
+
+        public static T Spawn<T>(this T prefab, Transform parent, Vector3 position) where T : Component
+        {
+            return ObjectPool.Spawn(prefab, parent, position, Quaternion.identity);
+        }
+
+        public static T Spawn<T>(this T prefab, Transform parent) where T : Component
+        {
+            return ObjectPool.Spawn(prefab, parent, Vector3.zero, Quaternion.identity);
+        }
+
         // --
 
         public static GameObject Spawn(this GameObject prefab, Transform parent, Vector3 position, Quaternion rotation, Vector3 scale)
