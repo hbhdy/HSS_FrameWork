@@ -34,9 +34,6 @@ namespace HSS
         private Dictionary<UIType, UIBase> dicUI = new Dictionary<UIType, UIBase>();
         private List<UIBase> openUIList = new List<UIBase>();
 
-        private Transform trScreen;
-        private Transform trPopup;
-
         // ----- Init -----
 
         public override IEnumerator Co_Init()
@@ -111,13 +108,13 @@ namespace HSS
 
         private void LoadUI<T>(UIType uiType, Canvas_SortOrder sortOrder = Canvas_SortOrder.POPUP, Action loadAfter = null) where T : MonoBehaviour
         {
-            GameObject objParent = sortOrder == Canvas_SortOrder.POPUP ? trPopup.gameObject : trScreen.gameObject;
+            GameObject objParent = sortOrder == Canvas_SortOrder.POPUP ? trUIPopup.gameObject : trUIScreen.gameObject;
             LoadUI<T>(UIAttrUtil.GetUIAttributeResourceName(uiType), objParent, loadAfter);
         }
 
         private void LoadUI<T>(string uiName, GameObject parent, Action loadAfter = null) where T : MonoBehaviour
         {
-            // 어드레서블 사용하지 않을 경우, 리소스 불러오는 구조 필요
+            // 어드레서블 사용 시
             Addressables.InstantiateAsync(uiName).Completed += obj =>
             {
                 var initUI = obj.Result;
@@ -131,6 +128,18 @@ namespace HSS
 
                 loadAfter?.Invoke(); 
             };
+
+            //// Resources 폴더 사용 시
+            //GameObject uiObj = null;
+            //UtilFunction.CreateInstantiateUIObject(out uiObj, Resources.Load<GameObject>(uiName), parent);
+
+            //T findComponent = uiObj.GetComponent<T>();
+            //UIBase uiBase = findComponent as UIBase;
+
+            //if (uiBase != null)
+            //    dicUI.Add(uiBase.UIType, uiBase);
+
+            //loadAfter?.Invoke();
         }
 
         private void _OpenUI(UIBase openUI)

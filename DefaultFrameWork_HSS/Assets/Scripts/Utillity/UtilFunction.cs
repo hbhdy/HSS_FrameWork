@@ -5,6 +5,15 @@ namespace HSS
 {
     public static  class UtilFunction
     {
+        public static void CreateInstantiateUIObject(out GameObject objTarget, GameObject objPrefab, GameObject objParent)
+        {
+            objTarget = GameObject.Instantiate(objPrefab) as GameObject;
+            objTarget.name = objPrefab.name;
+            objTarget.transform.SetParent(objParent.transform, false);
+
+            SetRectTransform(objTarget, objPrefab);
+        }
+
         public static void SetRectTransform(GameObject objTarget,GameObject objOrigin)
         {
             SetRectTransform(objTarget.GetComponent<RectTransform>(), objOrigin.GetComponent<RectTransform>());
