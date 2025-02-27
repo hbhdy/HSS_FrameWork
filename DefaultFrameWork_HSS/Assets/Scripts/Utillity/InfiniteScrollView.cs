@@ -73,8 +73,10 @@ namespace HSS
 
         private void SetItems()
         {
-            for (int i = 0; i < scrollRect.content.childCount; i++)
-                items.Add(scrollRect.content.GetChild(i).GetComponent<RectTransform>());
+            items.Clear();
+
+            foreach (RectTransform childRect in scrollRect.content)
+                items.Add(childRect);
 
             itemCount = items.Count;
         }
@@ -139,16 +141,18 @@ namespace HSS
 
             for (int i = 0; i < items.Count; i++)
             {
+                Vector3 itemLocalPos = scrollRect.transform.InverseTransformPoint(items[i].transform.position);
+
                 if (isHorizontal)
                 {
-                    if (scrollRect.transform.InverseTransformPoint(items[i].transform.position).x > disableMarginX + moveOffset)
+                    if (itemLocalPos.x > disableMarginX + moveOffset)
                     {
                         tempAnchoredPos = items[i].anchoredPosition;
                         tempAnchoredPos.x -= itemCount * recordOffsetX;
                         items[i].anchoredPosition = tempAnchoredPos;
                         scrollRect.content.GetChild(itemCount - 1).transform.SetAsFirstSibling();
                     }
-                    else if (scrollRect.transform.InverseTransformPoint(items[i].transform.position).x < -disableMarginX)
+                    else if (itemLocalPos.x < -disableMarginX)
                     {
                         tempAnchoredPos = items[i].anchoredPosition;
                         tempAnchoredPos.x += itemCount * recordOffsetX;
@@ -159,30 +163,24 @@ namespace HSS
 
                 if (isVertical)
                 {
-                    if (scrollRect.transform.InverseTransformPoint(items[i].transform.position).y > disableMarginY + moveOffset)
+                    if (itemLocalPos.y > disableMarginY + moveOffset)
                     {
                         tempAnchoredPos = items[i].anchoredPosition;
                         tempAnchoredPos.y -= itemCount * recordOffsetY;
 
-                        if (isLimitHeight == true)
-                        {
-                            if (limitHeight < Mathf.Abs(tempAnchoredPos.y))
-                                return;
-                        }
+                        if (isLimitHeight == true && limitHeight < Mathf.Abs(tempAnchoredPos.y))
+                            return;
 
                         items[i].anchoredPosition = tempAnchoredPos;
                         scrollRect.content.GetChild(itemCount - 1).transform.SetAsFirstSibling();
                     }
-                    else if (scrollRect.transform.InverseTransformPoint(items[i].transform.position).y < -disableMarginY)
+                    else if (itemLocalPos.y < -disableMarginY)
                     {
                         tempAnchoredPos = items[i].anchoredPosition;
                         tempAnchoredPos.y += itemCount * recordOffsetY;
 
-                        if (isLimitHeight == true)
-                        {
-                            if (oringStartPos.y < tempAnchoredPos.y)
+                        if (isLimitHeight == true && oringStartPos.y < tempAnchoredPos.y)
                                 return;
-                        }
 
                         items[i].anchoredPosition = tempAnchoredPos;
                         scrollRect.content.GetChild(0).transform.SetAsLastSibling();

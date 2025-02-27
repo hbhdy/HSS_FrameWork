@@ -72,6 +72,7 @@ namespace HSS
         }
 
         // 아래의 방식을 사용했었는데 이곳 저곳에서 시간 코루틴을 사용하면 한번에 관리가 어려웠음
+        // 2월 이후 추가 생각 : 꼭 한번에 관리해야하는 것인가??? 여러 고민이 드는 것 같다.
 
         //public static Coroutine RemainVisibleUI(MonoBehaviour mono, Text textObject, DateTime endTime, string format = "", bool isHourDisplay = true, bool isRealTime = true, Action timeOverAction = null)
         //{

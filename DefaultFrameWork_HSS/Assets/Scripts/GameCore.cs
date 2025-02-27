@@ -73,7 +73,6 @@ namespace HSS
             if (deltaTime >= 1f)
             {
                 TIME.DelayUpdate_OneSeconds();
-                //UI.DelayUpdate_OneSeconds();
 
                 deltaTime -= 1f;
             }

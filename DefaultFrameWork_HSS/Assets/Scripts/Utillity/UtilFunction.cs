@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace HSS
@@ -7,14 +8,13 @@ namespace HSS
     {
         public static void CreateInstantiateUIObject(out GameObject objTarget, GameObject objPrefab, GameObject objParent)
         {
-            objTarget = GameObject.Instantiate(objPrefab) as GameObject;
+            objTarget = GameObject.Instantiate(objPrefab, objParent.transform, false) as GameObject;
             objTarget.name = objPrefab.name;
-            objTarget.transform.SetParent(objParent.transform, false);
 
             SetRectTransform(objTarget, objPrefab);
         }
 
-        public static void SetRectTransform(GameObject objTarget,GameObject objOrigin)
+        public static void SetRectTransform(GameObject objTarget, GameObject objOrigin)
         {
             SetRectTransform(objTarget.GetComponent<RectTransform>(), objOrigin.GetComponent<RectTransform>());
         }
@@ -34,44 +34,30 @@ namespace HSS
             rectTarget.sizeDelta = rectOrigin.sizeDelta;
             rectTarget.localScale = rectOrigin.localScale;
         }
-        
-        public static void SetActiveCheck(GameObject obj , bool isActive)
+
+        public static void SetActiveCheck(GameObject obj, bool isActive)
         {
-            if(obj != null)
-            {
-                if (isActive && !obj.activeSelf)
-                    obj.SetActive(true);
-                else if (!isActive && obj.activeSelf)
-                    obj.SetActive(false);
-            }
+            if (obj != null && obj.activeSelf != isActive)
+                obj.SetActive(isActive);
         }
 
         public static string GetFullPath(Transform tr, string path = null)
         {
+            StringBuilder sb = new StringBuilder(path ?? string.Empty);
             Transform t = tr;
-            string fullPath;
-            if (path != null && path.StartsWith("/"))
-                fullPath = path;
-            else
+
+            while (t != null)
             {
-                fullPath = string.Empty;
-                while (t != null)
-                {
-                    if (string.IsNullOrEmpty(fullPath))
-                        fullPath = t.name;
-                    else
-                        fullPath = string.Concat(t.name, "/", fullPath);
-
-                    t = t.parent;
-                }
-
-                if (!string.IsNullOrEmpty(path))
-                    fullPath += string.Concat("/", path);
+                sb.Insert(0, $"{t.name}/");
+                t = t.parent;
             }
-            return fullPath;
+
+            return sb.ToString().TrimEnd('/');
         }
 
         #region Find Object
+
+        // path가 경로 또는 이름
 
         private static Transform FindTransform(Transform tr, string path)
         {
@@ -93,28 +79,22 @@ namespace HSS
 
         public static T Find<T>(Transform tr) where T : Component
         {
-            T component = tr.GetComponent<T>();
-            if (component == null)
-            {
-                HSSLog.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, "")}");
-            }
+            if (tr.TryGetComponent(out T t))
+                return t;
 
-            return component;
+            HSSLog.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, "")}");
+            return null;
         }
 
         public static T Find<T>(Transform tr, string path) where T : Component
         {
-            Transform t = FindTransform(tr, path);
-            if (t == null) 
-                return null;
+            Transform trans = FindTransform(tr, path);
 
-            T component = t.GetComponent<T>();
-            if (component == null)
-            {
-                HSSLog.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, path)}");
-            }
+            if (trans.TryGetComponent(out T t))
+                return t;
 
-            return component;
+            HSSLog.LogWarning($"{typeof(T).Name} Not Found : path={GetFullPath(tr, path)}");
+            return null;
         }
 
         public static GameObject Find(this GameObject obj, string path)
@@ -140,22 +120,14 @@ namespace HSS
         public static List<GameObject> FindAll(Transform tr, string path)
         {
             List<GameObject> all = new List<GameObject>();
-            int index = path.LastIndexOf('/');
-            string name = index < 0 ? path : path.Substring(index + 1);
-
             Transform findTr = FindTransform(tr, path);
-            if (findTr != null)
+
+            if (findTr?.parent != null)
             {
-                Transform parent = findTr.parent;
-                if (parent != null)
+                foreach(Transform childTr in findTr.parent)
                 {
-                    int childCount = parent.childCount;
-                    for (int i = 0; i < childCount; ++i)
-                    {
-                        Transform childTr = parent.GetChild(i);
-                        if (childTr.name == name)
-                            all.Add(childTr.gameObject);
-                    }
+                    if(childTr.name == findTr.name)
+                        all.Add(childTr.gameObject);
                 }
             }
 
@@ -193,9 +165,7 @@ namespace HSS
             Transform tr = obj.transform;
             while (tr != null)
             {
-                T comp = tr.gameObject.GetComponent<T>();
-
-                if (comp != null)
+                if (tr.TryGetComponent(out T comp))
                     return comp;
 
                 tr = tr.parent;
@@ -206,18 +176,7 @@ namespace HSS
 
         public static GameObject FindParentObject(Transform target)
         {
-            if (target)
-            {
-                if (target.parent)
-                {
-                    GameObject obj = target.parent.gameObject;
-                    if (obj)
-                        return obj;
-                    else
-                        return FindParentObject(target.parent);
-                }
-            }
-            return null;
+            return target?.parent?.gameObject ?? null;
         }
 
         public static GameObject FindChild(GameObject obj, string strName)
