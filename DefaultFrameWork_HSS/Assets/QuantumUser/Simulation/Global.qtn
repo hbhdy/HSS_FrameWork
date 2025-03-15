@@ -1,0 +1,4 @@
+global
+{
+    Int32 AsteroidsWaveCount;
+}
