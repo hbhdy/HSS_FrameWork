@@ -3,7 +3,8 @@ using System;
 using System.Collections;
 using System.Globalization;
 using UnityEngine.Networking;
-using UniRx;
+using R3;
+using Cysharp.Threading.Tasks;
 
 namespace HSS
 {
@@ -14,7 +15,7 @@ namespace HSS
         private DateTime baseTime;
         public DateTime nowUTC => baseTime;
 
-        public IReactiveProperty<int> testProperty = new ReactiveProperty<int>(0);
+        public ReactiveProperty<int> testProperty = new ReactiveProperty<int>(0);
 
         // ----- Init -----
 
@@ -25,10 +26,36 @@ namespace HSS
             yield return base.Co_Init();
         }
 
-        public override void Init()
+        public override async void Init()
         {
+            // 비동기 하지않기
+            Task_GetGoogleTime(null).Forget();
+            // 비동기 진행
+            await Task_GetGoogleTime(null);
+
             base.Init();
         }
+
+        public async UniTask Task_GetGoogleTime(Action action)
+        {
+            UnityWebRequest request = UnityWebRequest.Get("https://google.com");
+
+            await request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string netTime = request.GetResponseHeader("date");
+                baseTime = DateTime.ParseExact(netTime,
+                                       "ddd, dd MMM yyyy HH:mm:ss 'GMT'",
+                                       CultureInfo.InvariantCulture.DateTimeFormat,
+                                       DateTimeStyles.AssumeUniversal).ToLocalTime();
+            }
+            else
+                HSSLog.LogWarning($"Request Error : {request.error}");
+
+            action?.Invoke();
+        }
+
 
         public IEnumerator Co_GetGoogleTime(Action action)
         {
