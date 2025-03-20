@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 
 namespace HSS
 {
@@ -39,6 +40,11 @@ namespace HSS
         public override IEnumerator Co_Init()
         {
             yield return base.Co_Init();
+        }
+
+        public override async UniTask Task_Init()
+        {
+            await base.Task_Init();
         }
 
         public override void Init()

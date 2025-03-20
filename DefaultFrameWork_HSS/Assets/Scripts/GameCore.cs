@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -37,32 +38,57 @@ namespace HSS
             return dicManagers.ContainsKey(type) ? dicManagers[type] as T : null;
         }
 
-        public IEnumerator Start()
+        //public IEnumerator Start()
+        //{
+        //    // 기본 프로젝트 내부 설정 처리
+        //    CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        //    Application.targetFrameRate = 60;
+        //    Time.timeScale = 1f;
+
+        //    yield return null;
+
+        //    dicManagers.Clear();
+        //    for (int i = 0; i < managerList.Count; i++)
+        //    {
+        //        yield return StartCoroutine(managerList[i].Co_Init());
+                
+        //        var type = managerList[i].GetType();
+        //        dicManagers.Add(type, managerList[i]);
+        //    }
+
+
+        //    isCoreReady = true;
+        //    yield return new WaitUntil(() => isCoreReady);
+
+        //    //for (int i = 0; i < managerList.Count; i++)
+        //    //    managerList[i].Init();
+
+        //    //UI.OpenUI(UIType.UIPopup_Common, Canvas_SortOrder.POPUP);
+        //}
+
+        public async void Start()
         {
             // 기본 프로젝트 내부 설정 처리
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             Application.targetFrameRate = 60;
             Time.timeScale = 1f;
 
-            yield return null;
-
             dicManagers.Clear();
             for (int i = 0; i < managerList.Count; i++)
             {
-                yield return StartCoroutine(managerList[i].Co_Init());
-                
+                await managerList[i].Task_Init();
+
                 var type = managerList[i].GetType();
                 dicManagers.Add(type, managerList[i]);
             }
 
-
             isCoreReady = true;
-            yield return new WaitUntil(() => isCoreReady);
+            await UniTask.WaitUntil(() => isCoreReady);
 
             //for (int i = 0; i < managerList.Count; i++)
             //    managerList[i].Init();
 
-            //UI.OpenUI(UIType.UIPopup_Common, Canvas_SortOrder.POPUP);
+            //    //UI.OpenUI(UIType.UIPopup_Common, Canvas_SortOrder.POPUP);
         }
 
         // ----- Main -----

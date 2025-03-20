@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,6 +73,11 @@ namespace HSS
         public override IEnumerator Co_Init()
         {
             yield return base.Co_Init();
+        }
+
+        public override async UniTask Task_Init()
+        {
+            await base.Task_Init();
         }
 
         public override void Init()

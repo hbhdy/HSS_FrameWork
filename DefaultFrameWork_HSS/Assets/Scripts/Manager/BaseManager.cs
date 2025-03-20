@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
 
@@ -13,6 +14,14 @@ namespace HSS
         public virtual IEnumerator Co_Init()
         {
             yield return null;
+
+            HSSLog.Log($"{gameObject.name} is Ready");
+            isReady = true;
+        }
+
+        public virtual async UniTask Task_Init()
+        {
+            await UniTask.Yield();
 
             HSSLog.Log($"{gameObject.name} is Ready");
             isReady = true;
