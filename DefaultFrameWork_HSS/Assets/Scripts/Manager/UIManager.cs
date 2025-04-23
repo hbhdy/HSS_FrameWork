@@ -4,6 +4,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine;
 using System.Collections;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 
 namespace HSS
 {
@@ -158,18 +159,31 @@ namespace HSS
         private void RefreshPopupSortingOrder()
         {
             int index = (int)Canvas_SortOrder.POPUP;
+            int count = openUIList.Count;
 
-            foreach (var uiBase in openUIList)
+            for (int i = 0; i < count; i++)
             {
-                if (uiBase == null)
+                if (openUIList[i] == null)
                     continue;
 
-                var baseCanvas = uiBase.GetCanvas();
+                Canvas baseCanvas = openUIList[i].GetCanvas();
                 if (baseCanvas != null)
                     baseCanvas.sortingOrder = index;
 
                 index += 10;
             }
+
+            //foreach (var uiBase in openUIList)
+            //{
+            //    if (uiBase == null)
+            //        continue;
+
+            //    var baseCanvas = uiBase.GetCanvas();
+            //    if (baseCanvas != null)
+            //        baseCanvas.sortingOrder = index;
+
+            //    index += 10;
+            //}
         }
     }
 }
